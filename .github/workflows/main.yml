@@ -22,7 +22,7 @@ jobs:
       - name: 'Tieba Sign'
         env:
           BDUSS: ${{ secrets.BDUSS }}
-        run: python module/main.py
+        run: python module/tieba.py
       - name: 'Pojie Sign'
         env:
           POJIECOOKIE: ${{ secrets.POJIECOOKIE }}

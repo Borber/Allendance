@@ -25,6 +25,6 @@ jobs:
         run: python module/main.py
       - name: '52pojie Sign'
           env:
-            BDUSS: ${{ secrets.POJIECOOKIE }}
+            POJIECOOKIE: ${{ secrets.POJIECOOKIE }}
           run: python module/52pojie.py
         

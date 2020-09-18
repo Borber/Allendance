@@ -19,7 +19,7 @@ def pojie():
     pre_result_a = re.findall(CHECK_IN_COMPLETED, pre_resp.text)
 
     if len(pre_result_a) == 1:
-        exit("重复签到")
+        return "重复签到"
 
     pre_result_b = re.findall(CHECK_IN_NOT_COMPLETED, pre_resp.text)
 
@@ -31,10 +31,10 @@ def pojie():
     result = re.findall(CHECK_IN_COMPLETED, resp_c.text)
 
     if len(pre_result_b) == 1 and len(result) == 1:
-        exit("签到成功")
+        return "签到成功"
     else:
-        exit("签到异常")
+        return "签到异常"
 
 
 if __name__ == '__main__':
-    pojie()
+    print(pojie())

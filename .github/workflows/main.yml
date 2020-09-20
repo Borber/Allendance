@@ -29,6 +29,6 @@ jobs:
         run: python module/52pojie.py
       - name: 'V2ex Sign'
         env:
-          POJIECOOKIE: ${{ secrets.VVEX }}
+          VVEX: ${{ secrets.VVEX }}
         run: python module/v2ex.py
         

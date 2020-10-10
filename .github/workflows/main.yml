@@ -11,24 +11,57 @@ jobs:
   sign:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout codes'
+      - name: '拉取代码'
         uses: actions/checkout@v2
-      - name: 'Set python'
+      - name: '初始化 Python'
         uses: actions/setup-python@v1
         with:
-          python-version: '3.6'
-      - name: 'Install dependencies'
-        run: python -m pip install --upgrade requests
-      - name: 'Tieba Sign'
+          python-version: '3.7'
+      - name: '安装依赖'
+        run: python -m pip install -r requirements.txt
+      - name: '开始签到'
+        run: echo '------开始签到------'
+      - name: '百度贴吧'
         env:
           BDUSS: ${{ secrets.BDUSS }}
         run: python module/tieba.py
-      - name: 'Pojie Sign'
+      - name: '吾爱破解'
         env:
           POJIECOOKIE: ${{ secrets.POJIECOOKIE }}
         run: python module/52pojie.py
-      - name: 'V2ex Sign'
+      - name: 'V2ex'
         env:
           VVEX: ${{ secrets.VVEX }}
         run: python module/v2ex.py
-        
+      - name: '天翼云'
+        run: |
+          user='${{ secrets.CLOUDUSER }}'
+          pwd='${{ secrets.CLOUDPWD }}'
+          user_list=()
+          pwd_list=()
+          IFS="#"
+          for u in ${user[*]}
+          do
+          user_list[${#user_list[*]}]=${u}
+          done
+          for p in ${pwd[*]}
+          do
+          pwd_list[${#pwd_list[*]}]=${p}
+          done
+          user_num=${#user_list[*]}
+          pwd_num=${#pwd_list[*]}
+
+          if [ $user_num != $pwd_num ];then
+          echo "账号和密码个数不对应"
+          exit 1
+          else
+          echo "共有 $user_num 个账号，即将开始签到"
+          fi
+
+          for ((i=0;i<$user_num;i++))
+          do
+          python3 module/cloud189.py <<EOF
+          ${user_list[$i]}
+          ${pwd_list[$i]}
+          EOF
+          done
